@@ -23,8 +23,6 @@ public class Pessoa {
     
     private String cidade;
     
-    // construtores + métodos get e set ...
-    
     public Pessoa() {
     	
     }

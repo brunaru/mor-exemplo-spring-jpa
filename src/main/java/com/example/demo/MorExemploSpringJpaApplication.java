@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -17,7 +20,7 @@ public class MorExemploSpringJpaApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner demo(PessoaRepository repository) {
+	public CommandLineRunner demo(PessoaRepository repository, ContaRepository contaRepository) {
 		return (args) -> {
 			// Adiciona algumas pessoas no banco
 			repository.save(new Pessoa("Jessica", "325.668.895-2", "10/10/2001", "Corumbataí"));
@@ -40,6 +43,22 @@ public class MorExemploSpringJpaApplication {
 				log.info("Nome: " + pessoa.getNome() + " é de " + pessoa.getCidade());
 			}
 			log.info("------- FIM -------");
+			
+			// Cria uma conta conjunta
+			List<Pessoa> casal = new ArrayList<>();
+			casal.add(repository.findByCpf("345.555.234-4")); // Joselina
+			casal.add(repository.findByCpf("222.444.895-4")); // Jorge			
+			contaRepository.save(new Conta("222-1", "12555-6", 23, casal));
+			// Busca a conta pelo CPF de Joselina
+			Conta conta = contaRepository.findByProprietariosCpf("345.555.234-4");
+			log.info("Conta de Joselina CPF 345.555.234-4");
+			log.info("--------------------------------------------");
+			log.info("Agência: " + conta.getAgencia() + 
+					", conta número:" + conta.getNumero());
+			for (Pessoa proprietario : conta.getProprietarios()) {
+				log.info("Proprietário: " + proprietario.getNome() + ", CPF: " + proprietario.getCpf());
+			}
+			
 		};
 	}
 

@@ -9,5 +9,7 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 	public List<Pessoa> findByNome(String nome);
 	
 	public List<Pessoa> findByCidade(String cidade);
+	
+	public Pessoa findByCpf(String cpf);
 
 }
