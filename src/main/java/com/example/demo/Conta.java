@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/* Exemplifica uma realacao OneToMany. */
+
 @Entity
 public class Conta {
 	
